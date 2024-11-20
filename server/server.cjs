@@ -1,14 +1,14 @@
+// This is v1 of the server.cjs, whis is only supported with gemini API Keys.
 const express = require('express');
-const cors = require('cors'); // Import cors
+const cors = require('cors');
 const dotenv = require('dotenv');
-const { GoogleGenerativeAI } = require('@google/generative-ai'); // Import GoogleGenerativeAI
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Use CORS middleware
 app.use(cors());
 
 app.use(express.json());
