@@ -4,6 +4,9 @@ This is a **Free** alternative to the other hacks/scripts on imagine. And comple
 
 ### but you NEED vscode
 
+# Upcoming
+Soon you can run this without having to locally build it using vercel.
+
 # Credits
 
 **Derourn**,
