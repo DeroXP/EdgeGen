@@ -2,7 +2,7 @@
 
 This is a **Free** alternative to the other hacks/scripts on imagine. And completely open-sourced which allows to be locally hosted on any computer (sorry for right now.)
 
-###but you NEED vscode
+### but you NEED vscode
 
 # Credits
 
