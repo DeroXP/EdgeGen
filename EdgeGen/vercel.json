@@ -12,8 +12,8 @@
   ],
   "routes": [
     {
-      "src": "question",
-      "dest": "server.js"
+      "src": "/api/question",
+      "dest": "/server.js"
     }
   ]
 }
