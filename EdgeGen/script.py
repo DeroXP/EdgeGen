@@ -4,7 +4,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import os
 import google.generativeai as genai
 
-project_path = r"C:\Users\Ginld\OneDrive\Documents\Projects\EdgeGen\Google-Q-A-Scraper-main" # Change to your project path
+project_path = r"C:\EdgeGen\Google-Q-A-Scraper-main" # Change to your project path
 if project_path not in sys.path:
     sys.path.append(project_path)
 
@@ -15,7 +15,7 @@ except ModuleNotFoundError as e:
     print("Please check that 'app.py' is in the directory and the path is correct.")
     sys.exit(1)
 
-API_KEY = "YOUR_API_KEY"
+API_KEY = "YOUR_API_KEY" # get a gemini spi key for free online and paste it here
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
