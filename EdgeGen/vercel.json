@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/question.js",
+      "src": "server.js",
       "use": "@vercel/node"
     },
     {
-      "src": "functions/script.py",
+      "src": "script.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/api/question",
-      "dest": "/api/question.js"
+      "src": "question",
+      "dest": "server.js"
     }
   ]
 }
