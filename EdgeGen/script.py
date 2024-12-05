@@ -15,7 +15,7 @@ except ModuleNotFoundError as e:
     print("Please check that 'app.py' is in the directory and the path is correct.")
     sys.exit(1)
 
-API_KEY = "AIzaSyBx5bdAd1RvUd3f_NfP5d0qwNURNxGrpdw"
+API_KEY = "YOUR_API_KEY"
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
