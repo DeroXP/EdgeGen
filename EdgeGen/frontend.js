@@ -18,41 +18,39 @@ javascript:void function() {
       }
 
       function showTypingText(target, text) {
-        target.innerHTML = ""; // Clear any existing content
+        target.innerHTML = "";
         let charIndex = 0;
-        let isBold = false; // Track if we are inside a bold section
-        let buffer = ""; // Buffer to accumulate characters
+        let isBold = false;
+        let buffer = "";
     
         const interval = setInterval(() => {
             if (charIndex < text.length) {
                 const char = text[charIndex];
                 
                 if (char === "*" && text.slice(charIndex, charIndex + 4) === "****") {
-                    // Handle bold toggling
                     if (isBold) {
                         target.innerHTML += `<b>${buffer}</b>`;
                     } else {
                         target.innerHTML += buffer;
                     }
-                    buffer = ""; // Clear buffer
-                    isBold = !isBold; // Toggle bold state
-                    charIndex += 3; // Skip next 3 asterisks
+                    buffer = "";
+                    isBold = !isBold;
+                    charIndex += 3;
                 } else if (char === " ") {
-                    buffer += "&nbsp;"; // Add non-breaking space for visible spacing
+                    buffer += "&nbsp;";
                 } else {
-                    buffer += char; // Accumulate normal character
+                    buffer += char;
                 }
                 charIndex++;
             } else {
-                // Append remaining text in the buffer
                 if (isBold) {
                     target.innerHTML += `<b>${buffer}</b>`;
                 } else {
                     target.innerHTML += buffer;
                 }
-                clearInterval(interval); // Stop animation when done
+                clearInterval(interval);
             }
-        }, 4); // Adjust typing speed here
+        }, 3);
       }
 
       function createOverlay(responseText) {
@@ -80,7 +78,6 @@ javascript:void function() {
                   zIndex: "10000",
               });
 
-              // Icon behind the text
               const icon = document.createElement("div");
               Object.assign(icon.style, {
                   width: "40px",
@@ -97,7 +94,6 @@ javascript:void function() {
               });
               icon.textContent = "AI";
 
-              // Text container
               const textContainer = document.createElement("div");
               textContainer.style.flex = "1";
 
@@ -148,7 +144,7 @@ javascript:void function() {
 
                   createTypingAnimation(button);
 
-                  fetch("http://localhost:3000/api/question", {
+                  fetch("https://edge-gen.vercel.app/api/question", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ text: questionText }),
@@ -164,7 +160,7 @@ javascript:void function() {
                       .catch((err) => {
                           console.error("Error fetching AI response:", err);
                           stopTypingAnimation(button, "!");
-                          button.style.backgroundColor = "#f44336"; // Red for error
+                          button.style.backgroundColor = "#f44336";
                           setTimeout(() => {
                               button.innerText = "↑";
                               button.style.backgroundColor = "#4CAF50";
