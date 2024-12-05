@@ -7,14 +7,14 @@ const app = express();
 const PORT = 3000;
 
 app.use(cors({
-  origin: 'https://r23.core.learn.edgenuity.com',
+  origin: '*',
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
 }));
 
 app.use(bodyParser.json());
 
-app.post("/api/question", async (req, res) => {
+app.post("/api/question", (req, res) => {
   const questionText = req.body.text;
 
   console.log(`Received question from client: ${questionText}`);
@@ -43,7 +43,6 @@ app.post("/api/question", async (req, res) => {
   });
 });
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
