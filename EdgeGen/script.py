@@ -1,21 +1,12 @@
 import sys
 import io
 import os
+import google.generativeai as genai
+from app import get_question_answer_pairs
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-project_path = os.path.join(os.path.dirname(__file__), 'Google-Q-A-Scraper-main')
-if project_path not in sys.path:
-    sys.path.append(project_path)
-
-try:
-    from app import get_question_answer_pairs
-except ModuleNotFoundError as e:
-    print(f"ModuleNotFoundError: {e}")
-    print("Please ensure 'app.py' is in the 'Google-Q-A-Scraper-main' folder and the path is correct.")
-    sys.exit(1)
-
 API_KEY = os.getenv("GENAI_API_KEY")
-import google.generativeai as genai
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
@@ -31,7 +22,7 @@ def generate_text(input_text):
         return f"Error generating text: {e}"
 
 def generate_answer(prompt):
-    """Get question-answer pairs from app.py and generate an explanation using the Gemini API."""
+    """Get question-answer pairs and generate an explanation using the Gemini API."""
     question_answer_pairs = get_question_answer_pairs(prompt)
     if question_answer_pairs:
         question, answer = question_answer_pairs[0]
