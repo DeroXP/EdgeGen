@@ -1,15 +1,21 @@
 const express = require("express");
 const cors = require('cors');
 const bodyParser = require("body-parser");
+const fetch = require('node-fetch');
 const { spawn } = require("child_process");
 
 const app = express();
-app.use(cors());
 const PORT = 3000;
+
+app.use(cors({
+  origin: 'https://r23.core.learn.edgenuity.com',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+}));
 
 app.use(bodyParser.json());
 
-app.post("/api/question", (req, res) => {
+app.post("/api/question", async (req, res) => {
   const questionText = req.body.text;
 
   console.log(`Received question from client: ${questionText}`);
