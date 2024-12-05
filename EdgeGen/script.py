@@ -1,10 +1,9 @@
 import sys
 import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import os
-import google.generativeai as genai
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-project_path = r"C:\EdgeGen\Google-Q-A-Scraper-main" # Change to your project path
+project_path = os.path.join(os.path.dirname(__file__), 'Google-Q-A-Scraper-main')
 if project_path not in sys.path:
     sys.path.append(project_path)
 
@@ -12,18 +11,16 @@ try:
     from app import get_question_answer_pairs
 except ModuleNotFoundError as e:
     print(f"ModuleNotFoundError: {e}")
-    print("Please check that 'app.py' is in the directory and the path is correct.")
+    print("Please ensure 'app.py' is in the 'Google-Q-A-Scraper-main' folder and the path is correct.")
     sys.exit(1)
 
-API_KEY = "YOUR_API_KEY" # get a gemini spi key for free online and paste it here
+API_KEY = os.getenv("GENAI_API_KEY")
+import google.generativeai as genai
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
-
 def generate_text(input_text):
-    """
-    Generate a response using the Gemini API.
-    """
+    """Generate a response using the Gemini API."""
     if not input_text.strip():
         return "Error: Input text cannot be empty"
     
@@ -33,27 +30,20 @@ def generate_text(input_text):
     except Exception as e:
         return f"Error generating text: {e}"
 
-
 def generate_answer(prompt):
-    """
-    Get the question-answer pairs from app.py and generate an explanation using the Gemini API.
-    """
+    """Get question-answer pairs from app.py and generate an explanation using the Gemini API."""
     question_answer_pairs = get_question_answer_pairs(prompt)
     if question_answer_pairs:
         question, answer = question_answer_pairs[0]
         combined_text = (
-            f"Question: {prompt}\n Please note that the answer to the question above should be prioritized. The following text is sourced from various sites, and while the sites may provide context or additional information, they are not directly needed to answer the question. Focus on providing the correct answer to the question above based on your knowledge and the context provided below.\n\n Context from Sites: {question, answer}\n Please provide your answer to the question in bold (meaning between two **), and include any relevant details from the context that might help, but do not rely solely on the sites."
+            f"Question: {prompt}\n Please prioritize the answer above. The following text is context from various sites, but focus on answering the question using your knowledge.\n\n Context from Sites: {question, answer}\n Answer in **bold**."
         )
-
         if not combined_text.strip():
             return "Error: Combined context is empty"
         
-        generated_response = generate_text(combined_text)
-        return generated_response
+        return generate_text(combined_text)
     else:
-        generated_response = generate_text(prompt)
-        return generated_response
-
+        return "Error: Webscrape Failed."
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
